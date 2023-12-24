@@ -1,0 +1,10 @@
+
+
+OPTION psf_version = 2.1;
+
+BEGIN DRIVER ml_acc_conv
+	OPTION supported_peripherals = (ml_acc_conv);
+	OPTION copyfiles = all;
+	OPTION VERSION = 1.0;
+	OPTION NAME = ml_acc_conv;
+END DRIVER
