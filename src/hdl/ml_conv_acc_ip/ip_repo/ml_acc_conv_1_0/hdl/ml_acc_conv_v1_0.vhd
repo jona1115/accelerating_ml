@@ -613,7 +613,10 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                 -- Wait here until we receive all weights
                 when LOADING_WEIGHTS =>
                     -- Testing writing to S00 start
-                    
+                    s_S00i_READ_START   <= '0';
+                    s_S00i_WRITE_START  <= '1';
+                    s_S00i_WRITE_ADDR   <= s_REG_00_ADDR_LOC;
+                    s_S00i_WRITE_DATA   <= x"D00D1234";
 					-- Test end
                 
                     -- if (s_M00i_READ_START = '0' and s_read_started = '0') then
