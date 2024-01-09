@@ -20,12 +20,12 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="8,190.861 ns"></ZoomStartTime>
-      <ZoomEndTime time="8,550.570 ns"></ZoomEndTime>
-      <Cursor1Time time="8,475.000 ns"></Cursor1Time>
+      <ZoomStartTime time="8,039.772 ns"></ZoomStartTime>
+      <ZoomEndTime time="8,555.956 ns"></ZoomEndTime>
+      <Cursor1Time time="8,485.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="368"></NameColumnWidth>
+      <NameColumnWidth column_width="362"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="4" />
@@ -159,7 +159,6 @@
             <obj_property name="ElementShortName">weights_arr[0:24][31:0]</obj_property>
             <obj_property name="ObjectShortName">weights_arr[0:24][31:0]</obj_property>
             <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            <obj_property name="isExpanded"></obj_property>
             <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[0]" type="array">
                <obj_property name="ElementShortName">[0][31:0]</obj_property>
                <obj_property name="ObjectShortName">[0][31:0]</obj_property>
@@ -285,6 +284,106 @@
                <obj_property name="ObjectShortName">[24][31:0]</obj_property>
                <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
             </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[0]" type="array">
+               <obj_property name="ElementShortName">[0][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[0][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[1]" type="array">
+               <obj_property name="ElementShortName">[1][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[1][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[2]" type="array">
+               <obj_property name="ElementShortName">[2][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[2][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[3]" type="array">
+               <obj_property name="ElementShortName">[3][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[3][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[4]" type="array">
+               <obj_property name="ElementShortName">[4][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[4][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[5]" type="array">
+               <obj_property name="ElementShortName">[5][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[5][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[6]" type="array">
+               <obj_property name="ElementShortName">[6][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[6][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[7]" type="array">
+               <obj_property name="ElementShortName">[7][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[7][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[8]" type="array">
+               <obj_property name="ElementShortName">[8][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[8][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[9]" type="array">
+               <obj_property name="ElementShortName">[9][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[9][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[10]" type="array">
+               <obj_property name="ElementShortName">[10][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[10][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[11]" type="array">
+               <obj_property name="ElementShortName">[11][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[11][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[12]" type="array">
+               <obj_property name="ElementShortName">[12][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[12][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[13]" type="array">
+               <obj_property name="ElementShortName">[13][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[13][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[14]" type="array">
+               <obj_property name="ElementShortName">[14][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[14][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[15]" type="array">
+               <obj_property name="ElementShortName">[15][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[15][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[16]" type="array">
+               <obj_property name="ElementShortName">[16][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[16][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[17]" type="array">
+               <obj_property name="ElementShortName">[17][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[17][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[18]" type="array">
+               <obj_property name="ElementShortName">[18][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[18][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[19]" type="array">
+               <obj_property name="ElementShortName">[19][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[19][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[20]" type="array">
+               <obj_property name="ElementShortName">[20][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[20][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[21]" type="array">
+               <obj_property name="ElementShortName">[21][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[21][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[22]" type="array">
+               <obj_property name="ElementShortName">[22][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[22][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[23]" type="array">
+               <obj_property name="ElementShortName">[23][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[23][31:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[24]" type="array">
+               <obj_property name="ElementShortName">[24][31:0]</obj_property>
+               <obj_property name="ObjectShortName">[24][31:0]</obj_property>
+            </wvobject>
          </wvobject>
          <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/inputs_arr" type="array">
             <obj_property name="ElementShortName">inputs_arr[0:24][31:0]</obj_property>
@@ -300,6 +399,7 @@
             <obj_property name="ElementShortName">fifo[0:24][31:0]</obj_property>
             <obj_property name="ObjectShortName">fifo[0:24][31:0]</obj_property>
             <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+            <obj_property name="isExpanded"></obj_property>
             <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[0]" type="array">
                <obj_property name="ElementShortName">[0][31:0]</obj_property>
                <obj_property name="ObjectShortName">[0][31:0]</obj_property>
@@ -538,7 +638,6 @@
       <wvobject fp_name="group1237" type="group">
          <obj_property name="label">Write Related</obj_property>
          <obj_property name="DisplayName">label</obj_property>
-         <obj_property name="isExpanded"></obj_property>
          <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/start_single_burst_write" type="logic">
             <obj_property name="ElementShortName">start_single_burst_write</obj_property>
             <obj_property name="ObjectShortName">start_single_burst_write</obj_property>
@@ -550,7 +649,6 @@
          <wvobject fp_name="group1420" type="group">
             <obj_property name="label">User</obj_property>
             <obj_property name="DisplayName">label</obj_property>
-            <obj_property name="isExpanded"></obj_property>
             <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00i_READ_START" type="logic">
                <obj_property name="ElementShortName">M00i_READ_START</obj_property>
                <obj_property name="ObjectShortName">M00i_READ_START</obj_property>
@@ -597,7 +695,6 @@
          <wvobject fp_name="group1252" type="group">
             <obj_property name="label">Write AXI</obj_property>
             <obj_property name="DisplayName">label</obj_property>
-            <obj_property name="isExpanded"></obj_property>
             <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M_AXI_AWADDR" type="array">
                <obj_property name="ElementShortName">M_AXI_AWADDR[31:0]</obj_property>
                <obj_property name="ObjectShortName">M_AXI_AWADDR[31:0]</obj_property>

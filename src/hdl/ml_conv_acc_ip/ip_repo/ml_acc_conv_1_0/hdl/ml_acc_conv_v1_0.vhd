@@ -676,18 +676,7 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                             end if;
 
                             if (write_ptr = NUMBER_OF_MACS2 - 1) then -- aka fifo is full
-                                -- -- Load (copy) all weights into weights array
-                                -- -- Serial approach (used when hw resource is limited):
-                                -- for i in 0 to (NUMBER_OF_MACS2 - 1) loop
-                                --     weights_arr(i) <= fifo(i);
-                                -- end loop;
-
-                                -- -- Reset fifo write pointer
-                                -- write_ptr <= 0;
-                                -- -- Set next state
-                                -- state	<= LOADING_IACT;    -- Go to next state
-
-                                state   <= READY_TO_COPY_WEIGHTS;
+                                state   <= READY_TO_COPY_WEIGHTS;   -- Go to the next state to copy fifo into weights_arr
                             else -- aka fifo not full
                                 state	<= LOADING_WEIGHTS;
                             end if;
