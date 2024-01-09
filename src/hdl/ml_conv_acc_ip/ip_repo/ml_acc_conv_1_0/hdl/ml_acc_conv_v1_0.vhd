@@ -16,8 +16,8 @@ entity ml_acc_conv_v1_0 is
 	generic (
 		-- Users to add parameters here
 		-- NUMBER_OF_MACS			: integer	:= 200;	-- Maximum axi4 burst length is 256
-		NUMBER_OF_MACS			: integer	:= 200;	-- For testing
-		NUMBER_OF_MACS_STDLV	: std_logic_vector	:= b"11001000"; -- This is 200 in binary
+		NUMBER_OF_MACS			: integer	:= 30;	-- For testing
+		NUMBER_OF_MACS_STDLV	: std_logic_vector	:= b"00011001"; -- This is 25 in binary
 		-- User parameters ends
 		-- Do not modify the parameters beyond this line
 
@@ -332,11 +332,11 @@ architecture arch_imp of ml_acc_conv_v1_0 is
 	--------------------------------------------------------------------------------
     -- Internal Signal Definitions --
     --------------------------------------------------------------------------------
-	signal s_INPUT_BRAM_BASE_ADDR	: std_logic_vector(31 downto 0)	:= x"42000000";
-	signal s_WEIGHT_BRAM_BASE_ADDR	: std_logic_vector(31 downto 0)	:= x"44000000";
-	signal s_OUTPUT_BRAM_BASE_ADDR	: std_logic_vector(31 downto 0)	:= x"40000000";
-	signal s_REG_00_ADDR			: std_logic_vector(31 downto 0) := x"43C00000";	-- ? Right wrong?
-	signal s_REG_01_ADDR			: std_logic_vector(31 downto 0) := x"43C00020";
+	signal s_INACT_BRAM_BASE_ADDR	: std_logic_vector(31 downto 0)	:= x"40000000";
+	signal s_WEIGHT_BRAM_BASE_ADDR	: std_logic_vector(31 downto 0)	:= x"42000000";
+	signal s_OUTACT_BRAM_BASE_ADDR	: std_logic_vector(31 downto 0)	:= x"44000000";
+	signal s_REG_00_ADDR			: std_logic_vector(31 downto 0) := x"43C00000";
+	signal s_REG_01_ADDR			: std_logic_vector(31 downto 0) := x"43C00004";
 	signal s_REG_02_ADDR			: std_logic_vector(31 downto 0) := x"00000000";
 	signal s_REG_03_ADDR			: std_logic_vector(31 downto 0) := x"00000000";
 	signal s_REG_04_ADDR			: std_logic_vector(31 downto 0) := x"00000000";
@@ -369,7 +369,7 @@ architecture arch_imp of ml_acc_conv_v1_0 is
     signal s_S00i_WRITE_DATA	    : std_logic_vector(31 downto 0);
     signal s_S00o_WRITE_DONE        : std_logic;
     
-    signal s_i_M00_read_result_counter  : std_logic_vector(15 downto 0)  := x"0000"; -- "i" means internal within this component
+    signal s_i_M00_read_result_counter : std_logic_vector(15 downto 0)  := x"0000"; -- "i" means internal within this component
     signal s_read_started           : std_logic := '0';
     signal s_write_started          : std_logic := '0';
     signal s_xxx_started            : std_logic := '0';
@@ -398,10 +398,10 @@ architecture arch_imp of ml_acc_conv_v1_0 is
 	--------------------------------------------------------------------------------
     -- Internal Component Definitions --
     --------------------------------------------------------------------------------
-	type fifo_array is array (0 to NUMBER_OF_MACS - 1) of std_logic_vector(31 downto 0);
-	signal fifo			: fifo_array;
-	signal write_ptr	: natural range 0 to NUMBER_OF_MACS	:= 0;
-	signal read_ptr		: natural range 0 to NUMBER_OF_MACS	:= 0;
+    type fifo_array is array (0 to NUMBER_OF_MACS - 1) of std_logic_vector(31 downto 0);
+    signal fifo         : fifo_array;
+    signal write_ptr    : natural range 0 to NUMBER_OF_MACS	:= 0;
+    signal read_ptr     : natural range 0 to NUMBER_OF_MACS	:= 0;
 
 begin
 
@@ -569,33 +569,30 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
     d_s_M00i_WRITE_ADDR             <= s_M00i_WRITE_ADDR;			-- Probe 6
     d_s_M00i_WRITE_DATA             <= s_M00i_WRITE_DATA;			-- Probe 7
     d_s_M00o_WRITE_DONE             <= s_M00o_WRITE_DONE;			-- Probe 8
+	d_s_S00_reg10                   <= s_S00o_READ_RESULT;          -- Probe 9
 	d_s_read_started				<= s_read_started;				-- Probe 10
 	d_s_write_started				<= s_write_started;				-- Probe 11
 	
-	-- Create and connect 800 M units (might blow up the FPGA)
+
+	-- Create and connect 25 Multiply units in parallel
 	gen_M_s: for i in 0 to NUMBER_OF_MACS - 1 generate
-		-- M_i: M
-		-- 	port map(
-		-- 		i_0		=> weights_arr(i),
-		-- 		i_1		=> inputs_arr(i),
-		-- 		o_0		=> parsum_arr(i)
-		-- 	);
 		parsum_arr(i) <= std_logic_vector(unsigned(weights_arr(i)) * unsigned(inputs_arr(i)));
 	end generate;
 	
-    -- Constantly read from S00 (only for debugging)
-	d_s_S00_reg10 <= s_S00o_READ_RESULT; -- Probe 9
-	
+    
     process (m00_axi_aclk) is
-    begin
-        if rising_edge(m00_axi_aclk) then	-- Rising Edge
+        begin
+            if rising_edge(m00_axi_aclk) then	-- Rising Edge
             case state is  -- State
-                when IDLE =>
-					s_S00i_READ_START <= '1';
-					s_S00i_READ_ADDR <= s_REG_10_ADDR_LOC;
+            when IDLE =>
+                    -- Poll S00's reg 10
+                    s_S00i_READ_START <= '1';
+                    s_S00i_WRITE_START <= '0';
+                    s_S00i_READ_ADDR <= s_REG_10_ADDR_LOC;
+
                     if (s_S00o_READ_RESULT = x"00000001") then
-					-- if (1 = 1) then
-					-- if (i_dummy = x"00000001") then 	-- remove after tb test
+                    -- if (1 = 1) then
+                    -- if (i_dummy = x"00000001") then 	-- remove after tb test
                         s_M00i_READ_START	<= '0';
                         s_M00i_READ_ADDR    <= s_ZEROs;
                         s_M00i_WRITE_START	<= '0';
@@ -615,65 +612,71 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                 
                 -- Wait here until we receive all weights
                 when LOADING_WEIGHTS =>
-                    if (s_M00i_READ_START = '0' and s_read_started = '0') then
-                        -------------------------------------------------------
-                        -- Required signals to start read transaction start
-                        s_M00_INIT_AXI_TXN  <= '1';
-                        s_M00i_READ_START   <= '1';
-                        s_M00i_WRITE_START  <= '0';
-                        s_M00i_READ_ADDR    <= s_WEIGHT_BRAM_BASE_ADDR; -- TODO: Change to weight base after test
-                        -- s_M00i_READ_LEN     <= b"00001010";
-                        s_M00i_READ_LEN     <= NUMBER_OF_MACS_STDLV;
-                        s_i_M00_read_result_counter <= (others => '0');
-                        -- Required signals to start read transaction end
-                        -------------------------------------------------------
-                        s_read_started      <= '1';
-                    elsif (s_read_started = '1') then
-                        if (s_M00i_READ_START = '1') then
-                            -- This is the first cycle since read started
-                            -------------------------------------------------------
-                            -- Required signals to continue read transaction start
-                            s_M00_INIT_AXI_TXN  <= '0';
-                            s_M00i_READ_START   <= '0';
-                            s_M00i_WRITE_START  <= '0';
-                            -- Required signals to continue read transaction end
-                            -------------------------------------------------------
-                        end if;
+                    -- Testing writing to S00 start
+                    
+					-- Test end
+                
+                    -- if (s_M00i_READ_START = '0' and s_read_started = '0') then
+                    --     -- If read has not started ("start" is defined by s_M00i_READ_START and s_read_started being hi)
+                    --     -------------------------------------------------------
+                    --     -- Required signals to start read transaction start
+                    --     s_M00_INIT_AXI_TXN  <= '1';
+                    --     s_M00i_READ_START   <= '1';
+                    --     s_M00i_WRITE_START  <= '0';
+                    --     s_M00i_READ_ADDR    <= s_WEIGHT_BRAM_BASE_ADDR;
+                    --     -- s_M00i_READ_LEN     <= b"00001010";
+                    --     s_M00i_READ_LEN     <= NUMBER_OF_MACS_STDLV;
+                    --     s_i_M00_read_result_counter <= (others => '0');
+                    --     -- Required signals to start read transaction end
+                    --     -------------------------------------------------------
+                    --     s_read_started      <= '1';
+                    -- elsif (s_read_started = '1') then
+                    --     -- If read has started
+                    --     if (s_M00i_READ_START = '1') then
+                    --         -- This is the first cycle since read started, as my API is that s_M00i_READ_START will only be hi for one cycle
+                    --         -------------------------------------------------------
+                    --         -- Required signals to continue read transaction start
+                    --         s_M00_INIT_AXI_TXN  <= '0';
+                    --         s_M00i_READ_START   <= '0'; -- Ensure s_M00i_READ_START is only hi for one cycle
+                    --         s_M00i_WRITE_START  <= '0';
+                    --         -- Required signals to continue read transaction end
+                    --         -------------------------------------------------------
+                    --     end if;
 
-                        s_i_M00_read_result_counter <= std_logic_vector(unsigned(s_i_M00_read_result_counter) + x"0001"); -- Increment counter (Internal)
-                        -- Wait here until we recieve valid values
-                        if (s_i_M00_read_result_counter = s_M00o_READ_RESULT_COUNTER) then -- If M00's counter also incremented
-                            -- This means we got a new read result, so:
+                    --     s_i_M00_read_result_counter <= std_logic_vector(unsigned(s_i_M00_read_result_counter) + x"0001"); -- Increment counter (Internal)
+                    --     -- Wait here until we recieve valid values
+                    --     if (s_i_M00_read_result_counter = s_M00o_READ_RESULT_COUNTER) then -- If M00's counter also incremented
+                    --         -- This means we got a new read result, so:
                             
-                            -------------------------------------------------------
-                            -- Adding stuff into FIFO start
-                            fifo(write_ptr) <= s_M00o_READ_RESULT;
-                            write_ptr <= write_ptr + 1;
+                    --         -------------------------------------------------------
+                    --         -- Adding stuff into FIFO start
+                    --         fifo(write_ptr) <= s_M00o_READ_RESULT;
+                    --         write_ptr <= write_ptr + 1;
 
-                            if (write_ptr = NUMBER_OF_MACS) then -- aka fifo is full
-                                -- Load (copy) all weights into weights array
-                                -- Serial approach (used when hw resource is limited):
-                                for i in 0 to NUMBER_OF_MACS - 1 loop
-                                    weights_arr(i) <= fifo(i);
-                                end loop;
+                    --         if (write_ptr = NUMBER_OF_MACS) then -- aka fifo is full
+                    --             -- Load (copy) all weights into weights array
+                    --             -- Serial approach (used when hw resource is limited):
+                    --             for i in 0 to NUMBER_OF_MACS - 1 loop
+                    --                 weights_arr(i) <= fifo(i);
+                    --             end loop;
 
-                                -- Reset fifo write pointer
-                                write_ptr <= 0;
-                                -- Set next state
-                                -- state	<= IDLE;		-- Delete this line once data-orcha test is complete
-                                state	<= LOADING_IACT;
-                            else -- aka fifo not full
-                                state	<= LOADING_WEIGHTS;
-                            end if;
-                            -- Adding stuff into FIFO end
-                            -------------------------------------------------------
-                        else
-                            -- Since we didnt get new read result, we should decrement the counter
-                            s_i_M00_read_result_counter <= std_logic_vector(unsigned(s_i_M00_read_result_counter) - x"0001");
-                        end if;
-                    else
-                        state           <= LOADING_WEIGHTS;
-                    end if;
+                    --             -- Reset fifo write pointer
+                    --             write_ptr <= 0;
+                    --             -- Set next state
+                    --             -- state	<= IDLE;		-- Delete this line once data-orcha test is complete
+                    --             state	<= LOADING_IACT;    -- Go to next state
+                    --         else -- aka fifo not full
+                    --             state	<= LOADING_WEIGHTS;
+                    --         end if;
+                    --         -- Adding stuff into FIFO end
+                    --         -------------------------------------------------------
+                    --     else
+                    --         -- Since we didnt get new read result, we should decrement the counter
+                    --         s_i_M00_read_result_counter <= std_logic_vector(unsigned(s_i_M00_read_result_counter) - x"0001");
+                    --     end if;
+                    -- else
+                    --     state           <= LOADING_WEIGHTS;
+                    -- end if;
 
                 -- EVERYTHING BELOW UNTESTED (NOT LIKE ABOVE IS TESTED BUT YEAH)
 

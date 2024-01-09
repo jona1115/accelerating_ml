@@ -1,0 +1,13 @@
+# Ignore everything...
+*
+
+# Except...
+
+!.gitignore
+!*.hdl
+
+!tb/
+!tb/*.vhd
+
+!dos/
+!dos/*.do
