@@ -333,6 +333,8 @@ architecture arch_imp of ml_acc_conv_v1_0 is
 	--------------------------------------------------------------------------------
     -- Internal Signal Definitions --
     --------------------------------------------------------------------------------
+    signal NUMBER_OF_MACS2          : integer := 25;
+    
 	signal s_INACT_BRAM_BASE_ADDR	: std_logic_vector(31 downto 0)	:= x"40000000";
 	signal s_WEIGHT_BRAM_BASE_ADDR	: std_logic_vector(31 downto 0)	:= x"42000000";
 	signal s_OUTACT_BRAM_BASE_ADDR	: std_logic_vector(31 downto 0)	:= x"44000000";
@@ -377,19 +379,21 @@ architecture arch_imp of ml_acc_conv_v1_0 is
     signal s_xxx_started            : std_logic := '0';
     
 	signal s_S00_AXI_reg_0_addr		: std_logic_vector(6 downto 0)	:= b"0000000";
-	type weights_array is array (0 to NUMBER_OF_MACS - 1) of std_logic_vector(31 downto 0);
+	type weights_array is array (0 to NUMBER_OF_MACS2 - 1) of std_logic_vector(31 downto 0);
 	signal weights_arr	: weights_array;
-	type inputs_array is array (0 to NUMBER_OF_MACS - 1) of std_logic_vector(31 downto 0);
+	type inputs_array is array (0 to NUMBER_OF_MACS2 - 1) of std_logic_vector(31 downto 0);
 	signal inputs_arr	: inputs_array;
 	signal filter_expired	: std_logic;
-	type parsum_array is array (0 to NUMBER_OF_MACS - 1) of std_logic_vector(63 downto 0);
+	type parsum_array is array (0 to NUMBER_OF_MACS2 - 1) of std_logic_vector(63 downto 0);
 	signal parsum_arr	: parsum_array;
 	signal final_sum	: std_logic_vector(63 downto 0)	:= x"0000000000000000";
 
 	-- Pipeline Stages
     type STATE_TYPE is (IDLE,
                         LOADING_WEIGHTS,
+                        READY_TO_COPY_WEIGHTS,
                         LOADING_IACT,
+                        READY_TO_COPY_IACT,
                         MAC,	-- M for Multiply
                         PREPARE_OUTPUT);
     signal state : STATE_TYPE := IDLE;
@@ -400,10 +404,10 @@ architecture arch_imp of ml_acc_conv_v1_0 is
 	--------------------------------------------------------------------------------
     -- Internal Component Definitions --
     --------------------------------------------------------------------------------
-    type fifo_array is array (0 to NUMBER_OF_MACS - 1) of std_logic_vector(31 downto 0);
+    type fifo_array is array (0 to NUMBER_OF_MACS2 - 1) of std_logic_vector(31 downto 0);
     signal fifo         : fifo_array;
-    signal write_ptr    : natural range 0 to NUMBER_OF_MACS	:= 0;
-    signal read_ptr     : natural range 0 to NUMBER_OF_MACS	:= 0;
+    signal write_ptr    : natural range 0 to NUMBER_OF_MACS2	:= 0;
+    signal read_ptr     : natural range 0 to NUMBER_OF_MACS2	:= 0;
 
 begin
 
@@ -578,7 +582,7 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
 	
 
 	-- Create and connect 25 Multiply units in parallel
-	gen_M_s: for i in 0 to NUMBER_OF_MACS - 1 generate
+	gen_M_s: for i in 0 to (NUMBER_OF_MACS2 - 1) generate
 		parsum_arr(i) <= std_logic_vector(unsigned(weights_arr(i)) * unsigned(inputs_arr(i)));
 	end generate;
 	
@@ -640,7 +644,8 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                         s_M00i_READ_START   <= '1';
                         s_M00i_WRITE_START  <= '0';
                         s_M00i_READ_ADDR    <= s_WEIGHT_BRAM_BASE_ADDR;
-                        s_M00i_READ_LEN     <= NUMBER_OF_MACS_STDLV;
+                        s_M00i_READ_LEN     <= b"00011001";
+                        -- s_M00i_READ_LEN     <= NUMBER_OF_MACS_STDLV; -- this did not work
                         s_i_M00_read_result_counter <= (others => '0');
                         -- Required signals to start read transaction end
                         -------------------------------------------------------
@@ -660,26 +665,29 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
 
                         s_i_M00_read_result_counter <= std_logic_vector(unsigned(s_i_M00_read_result_counter) + x"0001"); -- Increment counter (Internal)
                         -- Wait here until we recieve valid values
-                        if (s_i_M00_read_result_counter = s_M00o_READ_RESULT_COUNTER) then -- If M00's counter also incremented
+                        if ((signed(s_i_M00_read_result_counter) + 1) = signed(s_M00o_READ_RESULT_COUNTER)) then -- If M00's counter also incremented
                             -- This means we got a new read result, so:
                             
                             -------------------------------------------------------
                             -- Adding stuff into FIFO start
-                            fifo(write_ptr) <= s_M00o_READ_RESULT;
-                            write_ptr <= write_ptr + 1;
+                            if (write_ptr < NUMBER_OF_MACS2) then
+                                fifo(write_ptr) <= s_M00o_READ_RESULT;
+                                write_ptr <= write_ptr + 1;
+                            end if;
 
-                            if (write_ptr = NUMBER_OF_MACS) then -- aka fifo is full
-                                -- Load (copy) all weights into weights array
-                                -- Serial approach (used when hw resource is limited):
-                                for i in 0 to NUMBER_OF_MACS - 1 loop
-                                    weights_arr(i) <= fifo(i);
-                                end loop;
+                            if (write_ptr = NUMBER_OF_MACS2 - 1) then -- aka fifo is full
+                                -- -- Load (copy) all weights into weights array
+                                -- -- Serial approach (used when hw resource is limited):
+                                -- for i in 0 to (NUMBER_OF_MACS2 - 1) loop
+                                --     weights_arr(i) <= fifo(i);
+                                -- end loop;
 
-                                -- Reset fifo write pointer
-                                write_ptr <= 0;
-                                -- Set next state
-                                -- state	<= IDLE;		-- Delete this line once data-orcha test is complete
-                                state	<= LOADING_IACT;    -- Go to next state
+                                -- -- Reset fifo write pointer
+                                -- write_ptr <= 0;
+                                -- -- Set next state
+                                -- state	<= LOADING_IACT;    -- Go to next state
+
+                                state   <= READY_TO_COPY_WEIGHTS;
                             else -- aka fifo not full
                                 state	<= LOADING_WEIGHTS;
                             end if;
@@ -687,12 +695,27 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                             -------------------------------------------------------
                         else
                             -- Since we didnt get new read result, we should decrement the counter
-                            s_i_M00_read_result_counter <= std_logic_vector(unsigned(s_i_M00_read_result_counter) - x"0001");
+                            if (signed(s_i_M00_read_result_counter) > 0) then
+                                s_i_M00_read_result_counter <= std_logic_vector(unsigned(s_i_M00_read_result_counter) - x"0001");
+                            end if;
                         end if;
                     else
-                        state           <= LOADING_WEIGHTS;
+                        state   <= LOADING_WEIGHTS;
                     end if;
 
+                when READY_TO_COPY_WEIGHTS =>
+                    -- Load (copy) all weights into weights array
+                    -- Serial approach (used when hw resource is limited):
+                    for i in 0 to (NUMBER_OF_MACS2 - 1) loop
+                        weights_arr(i) <= fifo(i);
+                    end loop;
+
+                    -- Reset fifo write pointer
+                    write_ptr <= 0;
+                    -- Set next state
+                    state	<= LOADING_IACT;    -- Go to next state
+
+                                        
                 -- EVERYTHING BELOW UNTESTED (NOT LIKE ABOVE IS TESTED BUT YEAH)
 
                 when LOADING_IACT =>
@@ -702,10 +725,10 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                         fifo(write_ptr) <= m00_axi_rdata;
                         write_ptr <= write_ptr + 1;
 
-                        if (write_ptr = NUMBER_OF_MACS) then -- aka fifo is full
+                        if (write_ptr = NUMBER_OF_MACS2) then -- aka fifo is full
                             -- Load (copy) all weights into weights array
                             -- Serial approach (used when hw resource is limited):
-                            for i in 0 to NUMBER_OF_MACS - 1 loop
+                            for i in 0 to NUMBER_OF_MACS2 - 1 loop
                                 inputs_arr(i) <= fifo(i);
                             end loop;
                             -- Parallel approach (look at LOADING_WEIGHTS stage!)
@@ -724,7 +747,7 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                     end if;
 
                 when MAC =>
-                    for i in 0 to NUMBER_OF_MACS - 1 loop
+                    for i in 0 to (NUMBER_OF_MACS2 - 1) loop
                         final_sum	<= std_logic_vector(unsigned(final_sum) + unsigned(parsum_arr(i)));
                     end loop;
                     state           <= PREPARE_OUTPUT;
