@@ -87,16 +87,24 @@ module tb;
 
 		#2850
 
-        //Write into the BRAM through GP0 and read back
-        // tb.DUT_zynq_sys.design_1_i.processing_system.inst.write_data(32'43C00000, 4, 32'hDEADBEEF, resp);
+        // // Read from S00 reg0 and make sure is the correct value
+        // tb.DUT_zynq_sys.design_1_i.processing_system.inst.read_data(32'h43C00000, 4, read_data, resp);
 		// #200
-        tb.DUT_zynq_sys.design_1_i.processing_system.inst.read_data(32'h43C00000, 4, read_data, resp);
+        // if(read_data == 32'hD00D1234) begin
+        //    $display ("Conv wrote 0xD00D1234 to reg0 success!");
+        // end
+        // else begin
+        //    $display ("Conv wrote 0xD00D1234 to reg0 failed!");
+        // end
+
+        // Read from OUTACT BRAM (offset 0) and make sure is the correct value
+        tb.DUT_zynq_sys.design_1_i.processing_system.inst.read_data(32'h44000000, 4, read_data, resp);
 		#200
-        if(read_data == 32'hD00D1234) begin
-           $display ("Conv wrote 0xD00D1234 to reg0 success!");
+        if(read_data == 32'hB1A0CA0A) begin
+           $display ("Conv wrote 0xB1A0CA0A to outact BRAM (offset 0) success!");
         end
         else begin
-           $display ("Conv wrote 0xD00D1234 to reg0 failed!");
+           $display ("Conv wrote 0xB1A0CA0A to outact BRAM (offset 0) failed!");
         end
 
         $display ("Simulation completed");

@@ -50,6 +50,7 @@ entity ml_acc_conv_v1_0_M00_AXI is
 		M00o_READ_RESULT_COUNTER : out std_logic_vector(15 downto 0);
 		M00i_WRITE_START	: in std_logic;
 		M00i_WRITE_ADDR	  : in std_logic_vector(31 downto 0);
+    M00i_WRITE_LEN    : in std_logic_vector(7 downto 0);
 		M00i_WRITE_DATA	  : in std_logic_vector(31 downto 0);
 		M00o_WRITE_DONE   : out std_logic;
 		
@@ -213,35 +214,35 @@ architecture implementation of ml_acc_conv_v1_0_M00_AXI is
 	-- Example State machine to initialize counter, initialize write transactions, 
 	 -- initialize read transactions and comparison of read data with the 
 	 -- written data words.
-	type state is (	IDLE, 			-- This state initiates AXI4Lite transaction  
-	 								-- after the state machine changes state to INIT_WRITE
-	 								-- when there is 0 to 1 transition on INIT_AXI_TXN
-	 				INIT_WRITE,		-- This state initializes write transaction,
-	 								-- once writes are done, the state machine 
-	 								-- changes state to INIT_READ 
-	 				INIT_READ,		-- This state initializes read transaction
-	 								-- once reads are done, the state machine 
-	 								-- changes state to INIT_COMPARE 
-	 				INIT_COMPARE	-- This state issues the status of comparison 
-	 			);					-- of the written data with the read data
+	type state is ( IDLE, 			  -- This state initiates AXI4Lite transaction  
+                                -- after the state machine changes state to INIT_WRITE
+                                -- when there is 0 to 1 transition on INIT_AXI_TXN
+                  INIT_WRITE,   -- This state initializes write transaction,
+                                -- once writes are done, the state machine 
+                                -- changes state to INIT_READ 
+                  INIT_READ,	  -- This state initializes read transaction
+                                -- once reads are done, the state machine 
+                                -- changes state to INIT_COMPARE 
+                  INIT_COMPARE  -- This state issues the status of comparison 
+                );					    -- of the written data with the read data
 
-	signal mst_exec_state  : state ; 
+	signal mst_exec_state  : state; 
 
 	-- AXI4FULL signals
 	--AXI4 internal temp signals
-	signal axi_awaddr	: std_logic_vector(C_M_AXI_ADDR_WIDTH-1 downto 0);
+	signal axi_awaddr	  : std_logic_vector(C_M_AXI_ADDR_WIDTH-1 downto 0);
 	signal axi_awvalid	: std_logic;
-	signal axi_wdata	: std_logic_vector(C_M_AXI_DATA_WIDTH-1 downto 0);
-	signal axi_wlast	: std_logic;
-	signal axi_wvalid	: std_logic;
-	signal axi_bready	: std_logic;
-	signal axi_araddr	: std_logic_vector(C_M_AXI_ADDR_WIDTH-1 downto 0);
+	signal axi_wdata	  : std_logic_vector(C_M_AXI_DATA_WIDTH-1 downto 0);
+	signal axi_wlast	  : std_logic;
+	signal axi_wvalid	  : std_logic;
+	signal axi_bready	  : std_logic;
+	signal axi_araddr	  : std_logic_vector(C_M_AXI_ADDR_WIDTH-1 downto 0);
 	signal axi_arvalid	: std_logic;
-	signal axi_rready	: std_logic;
+	signal axi_rready	  : std_logic;
 	--write beat count in a burst
 	signal write_index	: std_logic_vector(C_TRANSACTIONS_NUM downto 0);
 	--read beat count in a burst
-	signal read_index	: std_logic_vector(C_TRANSACTIONS_NUM downto 0);
+	signal read_index	  : std_logic_vector(C_TRANSACTIONS_NUM downto 0);
 	--size of C_M_AXI_BURST_LEN length burst in bytes
 	signal burst_size_bytes	: std_logic_vector(C_TRANSACTIONS_NUM+2 downto 0);
 	--The burst counters are used to track the number of burst transfers of C_M_AXI_BURST_LEN burst length needed to transfer 2^C_MASTER_LENGTH bytes of data.
@@ -277,9 +278,13 @@ begin
 	--I/O Connections. Write Address (AW)
 	M_AXI_AWID	<= (others => '0');
 	--The AXI address is a concatenation of the target base address + active offset range
-	M_AXI_AWADDR	<= std_logic_vector( unsigned(C_M_TARGET_SLAVE_BASE_ADDR) + unsigned(axi_awaddr) );
+	-- M_AXI_AWADDR	<= std_logic_vector( unsigned(C_M_TARGET_SLAVE_BASE_ADDR) + unsigned(axi_awaddr) );
+  -- Jonathan: Idk what the above line is doing so I wrote the below line
+  -- M_AXI_AWADDR  <= axi_awaddr; --Moved to bottom inside process
 	--Burst LENgth is number of transaction beats, minus 1
-	M_AXI_AWLEN	<= std_logic_vector( to_unsigned(C_M_AXI_BURST_LEN - 1, 8) );
+	-- M_AXI_AWLEN	<= std_logic_vector( to_unsigned(C_M_AXI_BURST_LEN - 1, 8) );
+  -- Jonathan: Idk what the above line is doing so I wrote the below line
+  M_AXI_AWLEN   <= M00i_WRITE_LEN;
 	--Size should be C_M_AXI_DATA_WIDTH, in 2^SIZE bytes, otherwise narrow bursts are used
 	M_AXI_AWSIZE	<= std_logic_vector( to_unsigned(clogb2((C_M_AXI_DATA_WIDTH/8)-1), 3) );
 	--INCR burst type is usually used, except for keyhole bursts
@@ -360,49 +365,53 @@ begin
 	-- The address will be incremented on each accepted address transaction,
 	-- by burst_size_byte to point to the next address. 
 
-	  process(M_AXI_ACLK)                                            
+	  process(M_AXI_ACLK)
 	  begin
-	    if (rising_edge (M_AXI_ACLK)) then                                 
-	      if (M_AXI_ARESETN = '0' or init_txn_pulse = '1') then                                   
-	        axi_awvalid <= '0';                                            
-	      else                                                             
-	        -- If previously not valid , start next transaction            
-	        if (axi_awvalid = '0' and start_single_burst_write = '1') then 
+	    if (rising_edge (M_AXI_ACLK)) then
+	      if (M_AXI_ARESETN = '0' or init_txn_pulse = '1') then
+	        axi_awvalid <= '0';
+	      else
+	        -- If previously not valid , start next transaction
+	        if (axi_awvalid = '0' and start_single_burst_write = '1') then
 	          axi_awvalid <= '1';
 	          -- Once asserted, VALIDs cannot be deasserted, so axi_awvalid
-	          -- must wait until transaction is accepted                   
-	        elsif (M_AXI_AWREADY = '1' and axi_awvalid = '1') then         
-	          axi_awvalid <= '0';                                          
-	        else                                                           
-	          axi_awvalid <= axi_awvalid;                                  
-	        end if;                                                        
-	      end if;                                                          
-	    end if;                                                            
-	  end process;                                                         
-	                                                                       
-	-- Next address after AWREADY indicates previous address acceptance    
-	  process(M_AXI_ACLK)                                                  
-	  begin                                                                
-	    if (rising_edge (M_AXI_ACLK)) then                                 
-	      if (M_AXI_ARESETN = '0' or init_txn_pulse = '1') then                                   
+	          -- must wait until transaction is accepted
+	        elsif (M_AXI_AWREADY = '1' and axi_awvalid = '1') then
+	          axi_awvalid <= '0';
+	        else
+	          axi_awvalid <= axi_awvalid;
+	        end if;
+	      end if;
+	    end if;
+	  end process;
+
+    M_AXI_AWADDR  <= M00i_WRITE_ADDR;   -- This works so I guess screw the process below?
+    
+	  -- Next address after AWREADY indicates previous address acceptance
+	  process(M_AXI_ACLK)
+	  begin
+	    if (rising_edge (M_AXI_ACLK)) then
+	      if (M_AXI_ARESETN = '0' or init_txn_pulse = '1') then
 	        -- axi_awaddr <= (others => '0');
 
           -- Jonathan code start
-          axi_awaddr	<= M00i_WRITE_ADDR;
+          -- axi_awaddr	<= M00i_WRITE_ADDR;
+          -- M_AXI_AWADDR  <= axi_awaddr;
           -- Jonathan code end
-			
-	      else                                                             
-	        if (M_AXI_AWREADY= '1' and axi_awvalid = '1') then             
-	          -- axi_awaddr <= std_logic_vector(unsigned(axi_awaddr) + unsigned(burst_size_bytes));                 
+
+	      else
+	        if (M_AXI_AWREADY= '1' and axi_awvalid = '1') then
+	          -- axi_awaddr <= std_logic_vector(unsigned(axi_awaddr) + unsigned(burst_size_bytes));
 
             -- Jonathan code start
-            axi_awaddr	<= M00i_WRITE_ADDR;
+            -- axi_awaddr	<= M00i_WRITE_ADDR;
+            -- M_AXI_AWADDR  <= axi_awaddr;
             -- Jonathan code end
 
-	        end if;                                                        
-	      end if;                                                          
-	    end if;                                                            
-	  end process;                                                         
+	        end if;
+	      end if;
+	    end if;
+	  end process;
 
 
 	----------------------
@@ -429,7 +438,7 @@ begin
 
 	--Forward movement occurs when the write channel is valid and ready
 
-	  wnext <= M_AXI_WREADY and axi_wvalid;
+  wnext <= M_AXI_WREADY and axi_wvalid;
 	                                                                                    
 	-- WVALID logic, similar to the axi_awvalid always block above                      
 	  process(M_AXI_ACLK)
@@ -947,26 +956,26 @@ begin
 	    end if;                                                                                                  
 	  end process;                                                                                               
 	                                                                                                             
-	  -- burst_read_active signal is asserted when there is a burst write transaction                            
-	  -- is initiated by the assertion of start_single_burst_write. start_single_burst_read                      
-	  -- signal remains asserted until the burst read is accepted by the master                                  
-	  process(M_AXI_ACLK)                                                                                        
-	  begin                                                                                                      
-	    if (rising_edge (M_AXI_ACLK)) then                                                                       
-	      if (M_AXI_ARESETN = '0' or init_txn_pulse = '1') then                                                                         
-	        burst_read_active <= '0';                                                                            
-	                                                                                                             
-	       --The burst_write_active is asserted when a write burst transaction is initiated                      
-	      else                                                                                                   
-	        if (start_single_burst_read = '1')then                                                               
-	          burst_read_active <= '1';                                                                          
-	        elsif (M_AXI_RVALID = '1' and axi_rready = '1' and M_AXI_RLAST = '1') then                           
-	          burst_read_active <= '0';                                                                          
-	        end if;                                                                                              
-	      end if;                                                                                                
-	    end if;                                                                                                  
-	  end process;                                                                                               
-	                                                                                                             
+	  -- burst_read_active signal is asserted when there is a burst write transaction
+	  -- is initiated by the assertion of start_single_burst_write. start_single_burst_read
+	  -- signal remains asserted until the burst read is accepted by the master
+	  process(M_AXI_ACLK)
+	  begin
+	    if (rising_edge (M_AXI_ACLK)) then
+	      if (M_AXI_ARESETN = '0' or init_txn_pulse = '1') then
+	        burst_read_active <= '0';
+
+	       --The burst_write_active is asserted when a write burst transaction is initiated
+	      else
+	        if (start_single_burst_read = '1')then
+	          burst_read_active <= '1';
+	        elsif (M_AXI_RVALID = '1' and axi_rready = '1' and M_AXI_RLAST = '1') then
+	          burst_read_active <= '0';
+	        end if;
+	      end if;
+	    end if;
+	  end process;
+
 	 -- Check for last read completion.                                                                          
 	                                                                                                             
 	 -- This logic is to qualify the last read count with the final read                                         
