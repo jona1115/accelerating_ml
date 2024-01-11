@@ -20,12 +20,12 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="8,039.772 ns"></ZoomStartTime>
-      <ZoomEndTime time="8,555.956 ns"></ZoomEndTime>
-      <Cursor1Time time="8,485.000 ns"></Cursor1Time>
+      <ZoomStartTime time="8,020.987 ns"></ZoomStartTime>
+      <ZoomEndTime time="8,997.554 ns"></ZoomEndTime>
+      <Cursor1Time time="8,222.321 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="362"></NameColumnWidth>
+      <NameColumnWidth column_width="356"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="4" />
@@ -132,6 +132,7 @@
       <wvobject fp_name="group1981" type="group">
          <obj_property name="label">FIFO Read Stuff</obj_property>
          <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
          <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/s_i_M00_read_result_counter" type="array">
             <obj_property name="ElementShortName">s_i_M00_read_result_counter[15:0]</obj_property>
             <obj_property name="ObjectShortName">s_i_M00_read_result_counter[15:0]</obj_property>
@@ -159,231 +160,6 @@
             <obj_property name="ElementShortName">weights_arr[0:24][31:0]</obj_property>
             <obj_property name="ObjectShortName">weights_arr[0:24][31:0]</obj_property>
             <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[0]" type="array">
-               <obj_property name="ElementShortName">[0][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[0][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[1]" type="array">
-               <obj_property name="ElementShortName">[1][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[1][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[2]" type="array">
-               <obj_property name="ElementShortName">[2][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[2][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[3]" type="array">
-               <obj_property name="ElementShortName">[3][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[3][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[4]" type="array">
-               <obj_property name="ElementShortName">[4][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[4][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[5]" type="array">
-               <obj_property name="ElementShortName">[5][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[5][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[6]" type="array">
-               <obj_property name="ElementShortName">[6][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[6][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[7]" type="array">
-               <obj_property name="ElementShortName">[7][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[7][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[8]" type="array">
-               <obj_property name="ElementShortName">[8][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[8][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[9]" type="array">
-               <obj_property name="ElementShortName">[9][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[9][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[10]" type="array">
-               <obj_property name="ElementShortName">[10][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[10][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[11]" type="array">
-               <obj_property name="ElementShortName">[11][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[11][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[12]" type="array">
-               <obj_property name="ElementShortName">[12][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[12][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[13]" type="array">
-               <obj_property name="ElementShortName">[13][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[13][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[14]" type="array">
-               <obj_property name="ElementShortName">[14][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[14][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[15]" type="array">
-               <obj_property name="ElementShortName">[15][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[15][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[16]" type="array">
-               <obj_property name="ElementShortName">[16][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[16][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[17]" type="array">
-               <obj_property name="ElementShortName">[17][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[17][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[18]" type="array">
-               <obj_property name="ElementShortName">[18][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[18][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[19]" type="array">
-               <obj_property name="ElementShortName">[19][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[19][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[20]" type="array">
-               <obj_property name="ElementShortName">[20][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[20][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[21]" type="array">
-               <obj_property name="ElementShortName">[21][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[21][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[22]" type="array">
-               <obj_property name="ElementShortName">[22][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[22][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[23]" type="array">
-               <obj_property name="ElementShortName">[23][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[23][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[24]" type="array">
-               <obj_property name="ElementShortName">[24][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[24][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[0]" type="array">
-               <obj_property name="ElementShortName">[0][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[0][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[1]" type="array">
-               <obj_property name="ElementShortName">[1][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[1][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[2]" type="array">
-               <obj_property name="ElementShortName">[2][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[2][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[3]" type="array">
-               <obj_property name="ElementShortName">[3][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[3][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[4]" type="array">
-               <obj_property name="ElementShortName">[4][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[4][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[5]" type="array">
-               <obj_property name="ElementShortName">[5][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[5][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[6]" type="array">
-               <obj_property name="ElementShortName">[6][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[6][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[7]" type="array">
-               <obj_property name="ElementShortName">[7][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[7][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[8]" type="array">
-               <obj_property name="ElementShortName">[8][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[8][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[9]" type="array">
-               <obj_property name="ElementShortName">[9][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[9][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[10]" type="array">
-               <obj_property name="ElementShortName">[10][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[10][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[11]" type="array">
-               <obj_property name="ElementShortName">[11][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[11][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[12]" type="array">
-               <obj_property name="ElementShortName">[12][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[12][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[13]" type="array">
-               <obj_property name="ElementShortName">[13][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[13][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[14]" type="array">
-               <obj_property name="ElementShortName">[14][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[14][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[15]" type="array">
-               <obj_property name="ElementShortName">[15][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[15][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[16]" type="array">
-               <obj_property name="ElementShortName">[16][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[16][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[17]" type="array">
-               <obj_property name="ElementShortName">[17][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[17][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[18]" type="array">
-               <obj_property name="ElementShortName">[18][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[18][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[19]" type="array">
-               <obj_property name="ElementShortName">[19][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[19][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[20]" type="array">
-               <obj_property name="ElementShortName">[20][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[20][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[21]" type="array">
-               <obj_property name="ElementShortName">[21][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[21][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[22]" type="array">
-               <obj_property name="ElementShortName">[22][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[22][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[23]" type="array">
-               <obj_property name="ElementShortName">[23][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[23][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/weights_arr[24]" type="array">
-               <obj_property name="ElementShortName">[24][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[24][31:0]</obj_property>
-            </wvobject>
          </wvobject>
          <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/inputs_arr" type="array">
             <obj_property name="ElementShortName">inputs_arr[0:24][31:0]</obj_property>
@@ -399,245 +175,63 @@
             <obj_property name="ElementShortName">fifo[0:24][31:0]</obj_property>
             <obj_property name="ObjectShortName">fifo[0:24][31:0]</obj_property>
             <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            <obj_property name="isExpanded"></obj_property>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[0]" type="array">
-               <obj_property name="ElementShortName">[0][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[0][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[1]" type="array">
-               <obj_property name="ElementShortName">[1][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[1][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[2]" type="array">
-               <obj_property name="ElementShortName">[2][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[2][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[3]" type="array">
-               <obj_property name="ElementShortName">[3][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[3][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[4]" type="array">
-               <obj_property name="ElementShortName">[4][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[4][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[5]" type="array">
-               <obj_property name="ElementShortName">[5][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[5][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[6]" type="array">
-               <obj_property name="ElementShortName">[6][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[6][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[7]" type="array">
-               <obj_property name="ElementShortName">[7][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[7][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[8]" type="array">
-               <obj_property name="ElementShortName">[8][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[8][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[9]" type="array">
-               <obj_property name="ElementShortName">[9][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[9][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[10]" type="array">
-               <obj_property name="ElementShortName">[10][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[10][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[11]" type="array">
-               <obj_property name="ElementShortName">[11][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[11][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[12]" type="array">
-               <obj_property name="ElementShortName">[12][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[12][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[13]" type="array">
-               <obj_property name="ElementShortName">[13][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[13][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[14]" type="array">
-               <obj_property name="ElementShortName">[14][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[14][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[15]" type="array">
-               <obj_property name="ElementShortName">[15][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[15][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[16]" type="array">
-               <obj_property name="ElementShortName">[16][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[16][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[17]" type="array">
-               <obj_property name="ElementShortName">[17][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[17][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[18]" type="array">
-               <obj_property name="ElementShortName">[18][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[18][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[19]" type="array">
-               <obj_property name="ElementShortName">[19][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[19][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[20]" type="array">
-               <obj_property name="ElementShortName">[20][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[20][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[21]" type="array">
-               <obj_property name="ElementShortName">[21][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[21][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[22]" type="array">
-               <obj_property name="ElementShortName">[22][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[22][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[23]" type="array">
-               <obj_property name="ElementShortName">[23][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[23][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[24]" type="array">
-               <obj_property name="ElementShortName">[24][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[24][31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[0]" type="array">
-               <obj_property name="ElementShortName">[0][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[0][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[1]" type="array">
-               <obj_property name="ElementShortName">[1][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[1][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[2]" type="array">
-               <obj_property name="ElementShortName">[2][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[2][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[3]" type="array">
-               <obj_property name="ElementShortName">[3][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[3][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[4]" type="array">
-               <obj_property name="ElementShortName">[4][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[4][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[5]" type="array">
-               <obj_property name="ElementShortName">[5][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[5][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[6]" type="array">
-               <obj_property name="ElementShortName">[6][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[6][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[7]" type="array">
-               <obj_property name="ElementShortName">[7][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[7][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[8]" type="array">
-               <obj_property name="ElementShortName">[8][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[8][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[9]" type="array">
-               <obj_property name="ElementShortName">[9][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[9][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[10]" type="array">
-               <obj_property name="ElementShortName">[10][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[10][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[11]" type="array">
-               <obj_property name="ElementShortName">[11][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[11][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[12]" type="array">
-               <obj_property name="ElementShortName">[12][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[12][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[13]" type="array">
-               <obj_property name="ElementShortName">[13][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[13][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[14]" type="array">
-               <obj_property name="ElementShortName">[14][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[14][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[15]" type="array">
-               <obj_property name="ElementShortName">[15][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[15][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[16]" type="array">
-               <obj_property name="ElementShortName">[16][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[16][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[17]" type="array">
-               <obj_property name="ElementShortName">[17][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[17][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[18]" type="array">
-               <obj_property name="ElementShortName">[18][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[18][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[19]" type="array">
-               <obj_property name="ElementShortName">[19][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[19][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[20]" type="array">
-               <obj_property name="ElementShortName">[20][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[20][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[21]" type="array">
-               <obj_property name="ElementShortName">[21][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[21][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[22]" type="array">
-               <obj_property name="ElementShortName">[22][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[22][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[23]" type="array">
-               <obj_property name="ElementShortName">[23][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[23][31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/fifo[24]" type="array">
-               <obj_property name="ElementShortName">[24][31:0]</obj_property>
-               <obj_property name="ObjectShortName">[24][31:0]</obj_property>
-            </wvobject>
          </wvobject>
       </wvobject>
    </wvobject>
    <wvobject fp_name="group1236" type="group">
       <obj_property name="label">M00</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M_AXI_ACLK" type="logic">
-         <obj_property name="ElementShortName">M_AXI_ACLK</obj_property>
-         <obj_property name="ObjectShortName">M_AXI_ACLK</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="group1420" type="group">
+         <obj_property name="label">User</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00i_READ_START" type="logic">
+            <obj_property name="ElementShortName">M00i_READ_START</obj_property>
+            <obj_property name="ObjectShortName">M00i_READ_START</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00i_READ_ADDR" type="array">
+            <obj_property name="ElementShortName">M00i_READ_ADDR[31:0]</obj_property>
+            <obj_property name="ObjectShortName">M00i_READ_ADDR[31:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00i_READ_LEN" type="array">
+            <obj_property name="ElementShortName">M00i_READ_LEN[7:0]</obj_property>
+            <obj_property name="ObjectShortName">M00i_READ_LEN[7:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00o_READ_RESULT" type="array">
+            <obj_property name="ElementShortName">M00o_READ_RESULT[31:0]</obj_property>
+            <obj_property name="ObjectShortName">M00o_READ_RESULT[31:0]</obj_property>
+            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00o_READ_RESULT_COUNTER" type="array">
+            <obj_property name="ElementShortName">M00o_READ_RESULT_COUNTER[15:0]</obj_property>
+            <obj_property name="ObjectShortName">M00o_READ_RESULT_COUNTER[15:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00i_WRITE_START" type="logic">
+            <obj_property name="ElementShortName">M00i_WRITE_START</obj_property>
+            <obj_property name="ObjectShortName">M00i_WRITE_START</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00i_WRITE_ADDR" type="array">
+            <obj_property name="ElementShortName">M00i_WRITE_ADDR[31:0]</obj_property>
+            <obj_property name="ObjectShortName">M00i_WRITE_ADDR[31:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00i_WRITE_LEN" type="array">
+            <obj_property name="ElementShortName">M00i_WRITE_LEN[7:0]</obj_property>
+            <obj_property name="ObjectShortName">M00i_WRITE_LEN[7:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00i_WRITE_DATA" type="array">
+            <obj_property name="ElementShortName">M00i_WRITE_DATA[31:0]</obj_property>
+            <obj_property name="ObjectShortName">M00i_WRITE_DATA[31:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00o_WRITE_DONE" type="logic">
+            <obj_property name="ElementShortName">M00o_WRITE_DONE</obj_property>
+            <obj_property name="ObjectShortName">M00o_WRITE_DONE</obj_property>
+         </wvobject>
       </wvobject>
       <wvobject fp_name="group1237" type="group">
          <obj_property name="label">Write Related</obj_property>
          <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
          <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/start_single_burst_write" type="logic">
             <obj_property name="ElementShortName">start_single_burst_write</obj_property>
             <obj_property name="ObjectShortName">start_single_burst_write</obj_property>
@@ -646,55 +240,10 @@
             <obj_property name="ElementShortName">burst_write_active</obj_property>
             <obj_property name="ObjectShortName">burst_write_active</obj_property>
          </wvobject>
-         <wvobject fp_name="group1420" type="group">
-            <obj_property name="label">User</obj_property>
-            <obj_property name="DisplayName">label</obj_property>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00i_READ_START" type="logic">
-               <obj_property name="ElementShortName">M00i_READ_START</obj_property>
-               <obj_property name="ObjectShortName">M00i_READ_START</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00i_READ_ADDR" type="array">
-               <obj_property name="ElementShortName">M00i_READ_ADDR[31:0]</obj_property>
-               <obj_property name="ObjectShortName">M00i_READ_ADDR[31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00i_READ_LEN" type="array">
-               <obj_property name="ElementShortName">M00i_READ_LEN[7:0]</obj_property>
-               <obj_property name="ObjectShortName">M00i_READ_LEN[7:0]</obj_property>
-               <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00o_READ_RESULT" type="array">
-               <obj_property name="ElementShortName">M00o_READ_RESULT[31:0]</obj_property>
-               <obj_property name="ObjectShortName">M00o_READ_RESULT[31:0]</obj_property>
-               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00o_READ_RESULT_COUNTER" type="array">
-               <obj_property name="ElementShortName">M00o_READ_RESULT_COUNTER[15:0]</obj_property>
-               <obj_property name="ObjectShortName">M00o_READ_RESULT_COUNTER[15:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00i_WRITE_START" type="logic">
-               <obj_property name="ElementShortName">M00i_WRITE_START</obj_property>
-               <obj_property name="ObjectShortName">M00i_WRITE_START</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00i_WRITE_ADDR" type="array">
-               <obj_property name="ElementShortName">M00i_WRITE_ADDR[31:0]</obj_property>
-               <obj_property name="ObjectShortName">M00i_WRITE_ADDR[31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00i_WRITE_LEN" type="array">
-               <obj_property name="ElementShortName">M00i_WRITE_LEN[7:0]</obj_property>
-               <obj_property name="ObjectShortName">M00i_WRITE_LEN[7:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00i_WRITE_DATA" type="array">
-               <obj_property name="ElementShortName">M00i_WRITE_DATA[31:0]</obj_property>
-               <obj_property name="ObjectShortName">M00i_WRITE_DATA[31:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M00o_WRITE_DONE" type="logic">
-               <obj_property name="ElementShortName">M00o_WRITE_DONE</obj_property>
-               <obj_property name="ObjectShortName">M00o_WRITE_DONE</obj_property>
-            </wvobject>
-         </wvobject>
          <wvobject fp_name="group1252" type="group">
             <obj_property name="label">Write AXI</obj_property>
             <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
             <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M_AXI_AWADDR" type="array">
                <obj_property name="ElementShortName">M_AXI_AWADDR[31:0]</obj_property>
                <obj_property name="ObjectShortName">M_AXI_AWADDR[31:0]</obj_property>
@@ -766,6 +315,11 @@
       <wvobject fp_name="group1240" type="group">
          <obj_property name="label">Read Related</obj_property>
          <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M_AXI_ACLK" type="logic">
+            <obj_property name="ElementShortName">M_AXI_ACLK</obj_property>
+            <obj_property name="ObjectShortName">M_AXI_ACLK</obj_property>
+         </wvobject>
          <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/start_single_burst_read" type="logic">
             <obj_property name="ElementShortName">start_single_burst_read</obj_property>
             <obj_property name="ObjectShortName">start_single_burst_read</obj_property>
@@ -773,6 +327,60 @@
          <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/burst_read_active" type="logic">
             <obj_property name="ElementShortName">burst_read_active</obj_property>
             <obj_property name="ObjectShortName">burst_read_active</obj_property>
+         </wvobject>
+         <wvobject fp_name="group605" type="group">
+            <obj_property name="label">Read AXI</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M_AXI_ARADDR" type="array">
+               <obj_property name="ElementShortName">M_AXI_ARADDR[31:0]</obj_property>
+               <obj_property name="ObjectShortName">M_AXI_ARADDR[31:0]</obj_property>
+               <obj_property name="CustomSignalColor">#FF0080</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M_AXI_ARLEN" type="array">
+               <obj_property name="ElementShortName">M_AXI_ARLEN[7:0]</obj_property>
+               <obj_property name="ObjectShortName">M_AXI_ARLEN[7:0]</obj_property>
+               <obj_property name="CustomSignalColor">#FF0080</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M_AXI_ARVALID" type="logic">
+               <obj_property name="ElementShortName">M_AXI_ARVALID</obj_property>
+               <obj_property name="ObjectShortName">M_AXI_ARVALID</obj_property>
+               <obj_property name="CustomSignalColor">#FF0080</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M_AXI_ARREADY" type="logic">
+               <obj_property name="ElementShortName">M_AXI_ARREADY</obj_property>
+               <obj_property name="ObjectShortName">M_AXI_ARREADY</obj_property>
+               <obj_property name="CustomSignalColor">#FF0080</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M_AXI_RDATA" type="array">
+               <obj_property name="ElementShortName">M_AXI_RDATA[31:0]</obj_property>
+               <obj_property name="ObjectShortName">M_AXI_RDATA[31:0]</obj_property>
+               <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+               <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M_AXI_RLAST" type="logic">
+               <obj_property name="ElementShortName">M_AXI_RLAST</obj_property>
+               <obj_property name="ObjectShortName">M_AXI_RLAST</obj_property>
+               <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M_AXI_RVALID" type="logic">
+               <obj_property name="ElementShortName">M_AXI_RVALID</obj_property>
+               <obj_property name="ObjectShortName">M_AXI_RVALID</obj_property>
+               <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb/DUT_zynq_sys/design_1_i/ml_acc_conv_0/U0/ml_acc_conv_v1_0_M00_AXI_inst/M_AXI_RREADY" type="logic">
+               <obj_property name="ElementShortName">M_AXI_RREADY</obj_property>
+               <obj_property name="ObjectShortName">M_AXI_RREADY</obj_property>
+               <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+               <obj_property name="UseCustomSignalColor">true</obj_property>
+            </wvobject>
          </wvobject>
       </wvobject>
    </wvobject>

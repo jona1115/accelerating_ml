@@ -84,6 +84,9 @@ module tb;
         tb.DUT_zynq_sys.design_1_i.processing_system.inst.write_data(32'h43C00028, 4, 32'h00000001, resp);
         // tb.DUT_zynq_sys.design_1_i.processing_system.inst.write_data(32'h43C00028, 4, 32'hDEADBEEF, resp);
         $display ("Wrote 1 to reg 10!");
+        #200
+        tb.DUT_zynq_sys.design_1_i.processing_system.inst.write_data(32'h43C00028, 4, 32'h00000000, resp);
+        $display ("Wrote 0 to reg 10!");
 
 		#2850
 

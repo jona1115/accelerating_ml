@@ -333,7 +333,7 @@ architecture arch_imp of ml_acc_conv_v1_0 is
 	--------------------------------------------------------------------------------
     -- Internal Signal Definitions --
     --------------------------------------------------------------------------------
-    signal NUMBER_OF_MACS2          : integer := 25;
+    constant NUMBER_OF_MACS2 : integer := 25;
     
 	signal s_INACT_BRAM_BASE_ADDR	: std_logic_vector(31 downto 0)	:= x"40000000";
 	signal s_WEIGHT_BRAM_BASE_ADDR	: std_logic_vector(31 downto 0)	:= x"42000000";
@@ -564,8 +564,6 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
 
 --
 
-	-- All Below are Jonathan Code
-
 	-- Debug ports mapping
     d_s_M00i_READ_START             <= s_M00i_READ_START;			-- Probe 0
     d_s_M00i_READ_ADDR              <= s_M00i_READ_ADDR;			-- Probe 1
@@ -598,8 +596,7 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                     s_S00i_READ_ADDR <= s_REG_10_ADDR_LOC;
 
                     if (s_S00o_READ_RESULT = x"00000001") then
-                    -- if (1 = 1) then
-                    -- if (i_dummy = x"00000001") then 	-- remove after tb test
+						-- PS indicated conv unit to start processing
                         s_M00i_READ_START	<= '0';
                         s_M00i_READ_ADDR    <= s_ZEROs;
                         s_M00i_WRITE_START	<= '0';
