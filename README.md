@@ -8,6 +8,7 @@ This repo will store the hardware portion of the project. The software portion i
 
 # Where are the HDL files?
 System: ./vivado/ml_acc_system.tcl (Not updated for now)
+
 Convolution IP: ./src/hdl/ml_conv_acc_ip/ip_repo/ml_acc_conv_1_0/hdl/*
 
 # Recreating Vivado project (using Vivado 2023.1)
