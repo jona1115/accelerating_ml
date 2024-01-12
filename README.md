@@ -6,6 +6,8 @@ Due to time constraints, my group wasn't able to complete the accelerator in tim
 
 This repo will store the hardware portion of the project. The software portion is ISU IP, hence will be kept private. However, I will explain what I am doing and share the results on my Medium (jonathan-tan.medium.com) blog. Hopefully, anyone interested can recreate this project with ease.
 
+To view benchmark results, implementation, and future ideas, visit my Medium blog (https://jonathan-tan.medium.com). I will post regularly as soon as updates have been made.
+
 # Where are the HDL files?
 System: ./vivado/ml_acc_system.tcl
 
