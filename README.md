@@ -7,7 +7,7 @@ Due to time constraints, my group wasn't able to complete the accelerator in tim
 This repo will store the hardware portion of the project. The software portion is ISU IP, hence will be kept private. However, I will explain what I am doing and share the results on my Medium (jonathan-tan.medium.com) blog. Hopefully, anyone interested can recreate this project with ease.
 
 # Where are the HDL files?
-System: ./vivado/ml_acc_system.tcl (Not updated for now)
+System: ./vivado/ml_acc_system.tcl
 
 Convolution IP: ./src/hdl/ml_conv_acc_ip/ip_repo/ml_acc_conv_1_0/hdl/*
 
