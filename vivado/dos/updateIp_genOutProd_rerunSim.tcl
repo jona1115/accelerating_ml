@@ -1,5 +1,5 @@
 # Prerun: cd C:/vivado_workspace/accelerating_ml/vivado/
-# tcl command: source updateIp_genOutProd_rerunSim.tcl
+# tcl command: source dos/updateIp_genOutProd_rerunSim.tcl
 # This tcl script is for updating block diagram ml_acc_conv ip.
 # This script is only compatible with Jonathan's computer which makes me think.. why tf did I not gitignored it?
 
