@@ -72,10 +72,11 @@ module tb;
         end
 
         // Write dummy data to Input BRAM
-        for (i = 0; i < 25; i = i + 1) begin
-            tb.DUT_zynq_sys.design_1_i.processing_system.inst.write_data(32'h40000000 + i*4, 4, -2*i**3+30*i**2+231, resp);
-            $display ("Wrote %d to address 0x%x (in Input BRAM).", -2*i**3+30*i**2+231, 32'h40000000 + i);
+        for (i = 0; i < 3600; i = i + 1) begin
+            tb.DUT_zynq_sys.design_1_i.processing_system.inst.write_data(32'h40000000 + i*4, 4, -270*i**3+88*i**2+28, resp);
+            $display ("Wrote %d to address 0x%x (in Input BRAM).", -270*i**3+88*i**2+28, 32'h40000000 + i);
         end
+
 
         assign test = 1'b1;
 

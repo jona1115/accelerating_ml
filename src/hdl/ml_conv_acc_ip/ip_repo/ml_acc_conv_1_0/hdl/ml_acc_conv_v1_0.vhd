@@ -414,12 +414,16 @@ architecture arch_imp of ml_acc_conv_v1_0 is
 	--------------------------------------------------------------------------------
     -- Internal Component Definitions --
     --------------------------------------------------------------------------------
+    -- for weights fifo
     type weights_fifo_array is array (0 to NUMBER_OF_MACS2 - 1) of std_logic_vector(31 downto 0);
-    signal weights_fifo : weights_fifo_array;
+    signal weights_fifo     : weights_fifo_array;
+    signal weights_write_ptr: natural range 0 to NUMBER_OF_MACS2	:= 0;
+    signal weights_read_ptr : natural range 0 to NUMBER_OF_MACS2	:= 0;
+    -- for iact fifo
     type iact_fifo_array is array (0 to NUMBER_READ_EACH_TIME - 1) of std_logic_vector(31 downto 0);
-    signal iact_fifo : iact_fifo_array;
-    signal write_ptr    : natural range 0 to NUMBER_OF_MACS2	:= 0;
-    signal read_ptr     : natural range 0 to NUMBER_OF_MACS2	:= 0;
+    signal iact_fifo        : iact_fifo_array;
+    signal iact_write_ptr   : natural range 0 to NUMBER_READ_EACH_TIME	:= 0;
+    signal iact_read_ptr    : natural range 0 to NUMBER_READ_EACH_TIME	:= 0;
 
 begin
 
@@ -618,10 +622,10 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
 
                         state <= LOADING_WEIGHTS;
                     else
-                        s_M00i_READ_START	<= '0';		-- Reset everything to stay and idle
-                        s_M00i_WRITE_START	<= '0';		-- Reset everything to stay and idle
-                        s_read_started		<= '0';		-- Reset everything to stay and idle
-                        s_write_started		<= '0';		-- Reset everything to stay and idle
+                        s_M00i_READ_START	<= '0';		-- Reset everything and stay IDLE
+                        s_M00i_WRITE_START	<= '0';		-- Reset everything and stay IDLE
+                        s_read_started		<= '0';		-- Reset everything and stay IDLE
+                        s_write_started		<= '0';		-- Reset everything and stay IDLE
                         
                         state <= IDLE;
                     end if;
@@ -653,8 +657,7 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                         s_M00i_READ_START   <= '1';
                         s_M00i_WRITE_START  <= '0';
                         s_M00i_READ_ADDR    <= s_WEIGHT_BRAM_BASE_ADDR;
-                        s_M00i_READ_LEN     <= b"00011001";
-                        -- s_M00i_READ_LEN     <= NUMBER_OF_MACS_STDLV; -- this did not work
+                        s_M00i_READ_LEN     <= std_logic_vector(to_unsigned(NUMBER_OF_MACS2, s_M00i_READ_LEN'length));
                         s_i_M00_read_result_counter <= (others => '0');
                         -- Required signals to start read transaction end
                         -------------------------------------------------------
@@ -679,12 +682,12 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                             
                             -------------------------------------------------------
                             -- Adding stuff into FIFO start
-                            if (write_ptr < NUMBER_OF_MACS2) then
-                                weights_fifo(write_ptr) <= s_M00o_READ_RESULT;
-                                write_ptr <= write_ptr + 1;
+                            if (weights_write_ptr < NUMBER_OF_MACS2) then
+                                weights_fifo(weights_write_ptr) <= s_M00o_READ_RESULT;
+                                weights_write_ptr <= weights_write_ptr + 1;
                             end if;
 
-                            if (write_ptr = NUMBER_OF_MACS2 - 1) then -- aka weights_fifo is full
+                            if (weights_write_ptr = NUMBER_OF_MACS2 - 1) then -- aka weights_fifo is full
                                 state   <= READY_TO_COPY_WEIGHTS;   -- Go to the next state to copy weights_fifo into weights_arr
                             else -- aka weights_fifo not full
                                 state	<= LOADING_WEIGHTS;
@@ -710,7 +713,7 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                     end loop;
 
                     -- Reset weights_fifo write pointer
-                    write_ptr <= 0;
+                    weights_write_ptr <= 0;
                     -- Set next state
                     state	<= LOADING_IACT;    -- Go to next state
                 -- End of READY_TO_COPY_WEIGHTS case
@@ -731,7 +734,8 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                     s_M00i_WRITE_ADDR	<= s_ZEROs;
                     s_M00i_WRITE_DATA	<= s_ZEROs;
                     s_M00_INIT_AXI_TXN	<= '0';
-                    
+                    s_read_started		<= '0';
+
                     -- Initialize states
                     iact_read_index     <= 0;
 
@@ -749,7 +753,7 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                         s_M00_INIT_AXI_TXN  <= '1';
                         s_M00i_READ_START   <= '1';
                         s_M00i_WRITE_START  <= '0';
-                        s_M00i_READ_ADDR    <= s_WEIGHT_BRAM_BASE_ADDR;
+                        s_M00i_READ_ADDR    <= s_INACT_BRAM_BASE_ADDR;
                         s_M00i_READ_LEN     <= std_logic_vector(to_unsigned(NUMBER_READ_EACH_TIME, s_M00i_READ_LEN'length));
                         s_i_M00_read_result_counter <= (others => '0');
                         -- Required signals to start read transaction end
@@ -775,12 +779,12 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                             
                             -------------------------------------------------------
                             -- Adding stuff into FIFO start
-                            if (write_ptr < NUMBER_OF_MACS2) then
-                                iact_fifo(write_ptr) <= s_M00o_READ_RESULT;
-                                write_ptr <= write_ptr + 1;
+                            if (iact_write_ptr < NUMBER_READ_EACH_TIME) then
+                                iact_fifo(iact_write_ptr) <= s_M00o_READ_RESULT;
+                                iact_write_ptr <= iact_write_ptr + 1;
                             end if;
 
-                            if (write_ptr = NUMBER_OF_MACS2 - 1) then -- aka iact_fifo is full
+                            if (iact_write_ptr = NUMBER_READ_EACH_TIME - 1) then -- aka iact_fifo is full
                                 state   <= READY_TO_COPY_PARTIAL_IACT;   -- Go to the next state to copy iact_fifo into iact arr
                             else -- aka iact_fifo not full
                                 state	<= PARTIAL_IACT_READ;
@@ -800,13 +804,14 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                 
                 when READY_TO_COPY_PARTIAL_IACT =>
 
-                -- End of READY_TO_COPY_PARTIAL_IACT
+                -- End of READY_TO_COPY_PARTIAL_IACT case
                 
                 when MAC =>
                     for i in 0 to (NUMBER_OF_MACS2 - 1) loop
                         final_sum	<= std_logic_vector(unsigned(final_sum) + unsigned(parsum_arr(i)));
                     end loop;
                     state           <= PREPARE_OUTPUT;
+                -- End of MAC case
 
                 when PREPARE_OUTPUT =>
                     -- The "WB" stage, job is to prepare the output
@@ -816,11 +821,13 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                     else
                         state           <= LOADING_IACT;
                     end if;
+                -- End of PREPARE_OUTPUT case
 
                 when others =>
                     state   <= IDLE;
                     -- Not really important, this case should never happen
                     -- Needed for proper synthesis
+                -- End of others case
             end case;  -- State
         end if;  -- Rising Edge
     end process;
