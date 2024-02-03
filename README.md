@@ -18,3 +18,7 @@ Convolution IP: ./src/hdl/ml_conv_acc_ip/ip_repo/ml_acc_conv_1_0/hdl/*
 1. Clone the project and go to the system TCL location (./vivado/ml_acc_system.tcl)
 2. Open Vivado and cd into ./vivado/
 3. Run: source ml_acc_system.tcl
+
+# Citation
+
+1. Although all files are original (created by Jonathan), this project's idea is heavily influenced by Iowa State's CPRE 487 by Professor Duwe.
