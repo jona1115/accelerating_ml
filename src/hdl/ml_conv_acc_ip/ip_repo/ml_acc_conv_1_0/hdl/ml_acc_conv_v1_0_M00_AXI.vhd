@@ -666,11 +666,15 @@ begin
 	  process(M_AXI_ACLK)
 	  begin
 	    if (rising_edge (M_AXI_ACLK)) then
-	      if (M_AXI_ARESETN = '0' or init_txn_pulse = '1') then
+	      if (M_AXI_ARESETN = '0' or init_txn_pulse = '1' or reads_done = '1') then
+          if (reads_done = '1') then
+            reads_done <= '0';
+          end if;
+          
 	        axi_rready <= '0';
           M00o_READ_RESULT <= (others => '0');
           s_M00o_READ_RESULT_COUNTER <= x"0000";
-          reads_done <= '0';
+          -- reads_done <= '0';
 
 	      -- accept/acknowledge rdata/rresp with axi_rready by the master
 	      -- when M_AXI_RVALID is asserted by slave
@@ -687,9 +691,11 @@ begin
               axi_rready <= '1';
               M00o_READ_RESULT <= M_AXI_RDATA;
               s_M00o_READ_RESULT_COUNTER <= std_logic_vector(unsigned(s_M00o_READ_RESULT_COUNTER) + x"0001"); -- Increment counter
+              reads_done <= '0';
             else
               -- We want to start collecting data
               axi_rready <= '1';
+              reads_done <= '0';
 	          end if;
 	        end if;
 	      end if;
@@ -857,31 +863,31 @@ begin
 	                --  mst_exec_state  <= INIT_WRITE;
 	                --  ERROR <= '0';
 	                --  compare_done <= '0';
-	               else                                                                                          
-	                 mst_exec_state  <= IDLE;                                                            
-	               end if;                                                                                       
-	                                                                                                             
-	            when INIT_WRITE =>                                                                               
-	              -- This state is responsible to issue start_single_write pulse to                              
-	              -- initiate a write transaction. Write transactions will be                                    
-	              -- issued until burst_write_active signal is asserted.                                         
-	              -- write controller                                                                            
-	                                                                                                             
-	                if (writes_done = '1') then                                                                  
-	                  -- mst_exec_state <= INIT_READ;                                                               
+	               else
+	                 mst_exec_state  <= IDLE;
+	               end if;
+
+	            when INIT_WRITE =>
+	              -- This state is responsible to issue start_single_write pulse to
+	              -- initiate a write transaction. Write transactions will be
+	              -- issued until burst_write_active signal is asserted.
+	              -- write controller
+
+	                if (writes_done = '1') then
+	                  -- mst_exec_state <= INIT_READ;
                     -- Jonathan code start
                     mst_exec_state <= IDLE; -- When it is done go back to idle
                     -- Jonathan code ends
-	                else                                                                                         
+	                else
 	                  mst_exec_state  <= INIT_WRITE; -- Continue writing
 
-	                if (axi_awvalid = '0' and start_single_burst_write = '0' and burst_write_active = '0' ) then 
-	                  start_single_burst_write <= '1';                                                           
-	                else                                                                                         
-	                  start_single_burst_write <= '0'; --Negate to generate a pulse                              
-	                end if;                                                                                      
-	              end if;                                                                                        
-	                                                                                                             
+	                if (axi_awvalid = '0' and start_single_burst_write = '0' and burst_write_active = '0' ) then
+	                  start_single_burst_write <= '1';
+	                else
+	                  start_single_burst_write <= '0'; --Negate to generate a pulse
+	                end if;
+	              end if;
+
 	            when INIT_READ =>
 	              -- This state is responsible to issue start_single_read pulse to
 	              -- initiate a read transaction. Read transactions will be

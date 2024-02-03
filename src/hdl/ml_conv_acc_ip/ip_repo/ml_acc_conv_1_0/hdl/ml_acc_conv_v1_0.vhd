@@ -373,6 +373,10 @@ architecture arch_imp of ml_acc_conv_v1_0 is
     signal s_S00i_WRITE_DATA	    : std_logic_vector(31 downto 0);
     signal s_S00o_WRITE_DONE        : std_logic;
     
+	-- Below are signals for the PAUSE_STATE
+	constant AMOUNT_CYCLE_PAUSE		: integer := 10;
+	signal PAUSE_CYCLE_COUNTER		: integer := 0;
+	
     -- Below are signals for the LOADING_IACT and related states
     constant NUMBER_OF_IACT         : integer := 3600;  -- 2nd layer's input act is 60*60 per channel
     constant NUMBER_READ_EACH_TIME  : integer := 200;
@@ -400,6 +404,7 @@ architecture arch_imp of ml_acc_conv_v1_0 is
     type STATE_TYPE is (IDLE,
                         LOADING_WEIGHTS,
                         READY_TO_COPY_WEIGHTS,
+						PAUSE_STATE,
                         LOADING_IACT,
                         PARTIAL_IACT_READ,
                         READY_TO_COPY_PARTIAL_IACT,
@@ -716,7 +721,17 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                     weights_write_ptr <= 0;
                     -- Set next state
                     state	<= LOADING_IACT;    -- Go to next state
+                    -- state	<= PAUSE_STATE;    -- Go to next state
                 -- End of READY_TO_COPY_WEIGHTS case
+
+                when PAUSE_STATE => -- I though this can fix the M00's reads done staying high issue but I guess not
+                    if (PAUSE_CYCLE_COUNTER < AMOUNT_CYCLE_PAUSE) then
+                        PAUSE_CYCLE_COUNTER <= PAUSE_CYCLE_COUNTER + 1;
+                        state <= PAUSE_STATE;
+                    else
+                        state <= LOADING_IACT;
+                    end if;
+                -- End of PAUSE_STATE case
 
                 when LOADING_IACT =>
                     -- Idea: We burst read 18 times, each time reading
