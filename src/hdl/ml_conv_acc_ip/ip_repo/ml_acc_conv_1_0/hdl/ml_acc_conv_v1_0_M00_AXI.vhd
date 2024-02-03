@@ -606,7 +606,7 @@ begin
 	      end if;
 	    end if;
 	  end process;
-	                                                                     
+
 	-- Next address after ARREADY indicates previous address acceptance  
 	  -- process(M_AXI_ACLK)
 	  -- begin
@@ -833,10 +833,13 @@ begin
 	        -- state transition
 	        case (mst_exec_state) is
 
-	            when IDLE =>                                                                              
-	             -- This state is responsible to initiate                               
-	             -- AXI transaction when init_txn_pulse is asserted 
-	               if (init_txn_pulse = '1' or M00i_READ_START = '1' or M00i_WRITE_START = '1') then       
+	            when IDLE =>
+                -- writes_done     <= '0'; -- Reset them to 0
+                -- reads_done      <= '0'; -- Reset them to 0
+              
+	             -- This state is responsible to initiate
+	             -- AXI transaction when init_txn_pulse is asserted
+	               if (init_txn_pulse = '1' or M00i_READ_START = '1' or M00i_WRITE_START = '1') then
                    -- Jonathan code start
                    if (M00i_READ_START = '1' and M00i_WRITE_START = '0') then
                      mst_exec_state <= INIT_READ;
@@ -845,13 +848,15 @@ begin
                      mst_exec_state <= INIT_WRITE;
                      ERROR <= '0';
                    else
-                     mst_exec_state <= IDLE;
+                      -- writes_done     <= '0'; -- Reset them to 0
+                      -- reads_done      <= '0'; -- Reset them to 0
+                      mst_exec_state <= IDLE;
                    end if;
                    -- Jonathan code end
 
-	                --  mst_exec_state  <= INIT_WRITE;                                                              
-	                --  ERROR <= '0'; 
-	                --  compare_done <= '0'; 
+	                --  mst_exec_state  <= INIT_WRITE;
+	                --  ERROR <= '0';
+	                --  compare_done <= '0';
 	               else                                                                                          
 	                 mst_exec_state  <= IDLE;                                                            
 	               end if;                                                                                       
@@ -877,28 +882,28 @@ begin
 	                end if;                                                                                      
 	              end if;                                                                                        
 	                                                                                                             
-	            when INIT_READ =>                                                                                
-	              -- This state is responsible to issue start_single_read pulse to                               
-	              -- initiate a read transaction. Read transactions will be                                      
-	              -- issued until burst_read_active signal is asserted.                                          
-	              -- read controller                                                                             
-	                if (reads_done = '1') then                                                                   
-	                  -- mst_exec_state <= INIT_COMPARE;     
+	            when INIT_READ =>
+	              -- This state is responsible to issue start_single_read pulse to
+	              -- initiate a read transaction. Read transactions will be
+	              -- issued until burst_read_active signal is asserted.
+	              -- read controller
+	                if (reads_done = '1') then
+	                  -- mst_exec_state <= INIT_COMPARE;
                     -- Jonathan code start
                     mst_exec_state <= IDLE; -- When it is done go back to idle
-                    -- Jonathan code ends                                                       
-	                else                                                                                         
-	                  mst_exec_state  <= INIT_READ;                                                              
-	                                                                                                             
-	                if (axi_arvalid = '0' and burst_read_active = '0' and start_single_burst_read = '0') then    
-	                  start_single_burst_read <= '1';                                                            
-	                else                                                                                         
-	                  start_single_burst_read <= '0'; --Negate to generate a pulse                               
-	                end if;                                                                                      
-	              end if;                                                                                        
-	                                                                                                             
-	            when INIT_COMPARE =>                                                                             
-                -- Jonathan: This should be a unreachable state because we aint comparing shit
+                    -- Jonathan code ends
+	                else
+	                  mst_exec_state  <= INIT_READ;
+
+	                if (axi_arvalid = '0' and burst_read_active = '0' and start_single_burst_read = '0') then
+	                  start_single_burst_read <= '1';
+	                else
+	                  start_single_burst_read <= '0'; --Negate to generate a pulse
+	                end if;
+	              end if;
+                when INIT_COMPARE =>
+
+                -- Jonathan: This should be a unreachable state because we aint comparing shit, this is auto generated code thats why I am leaving it here
 
 	              -- This state is responsible to issue the state of comparison                                  
 	              -- of written data with the read data. If no error flags are set,                              
