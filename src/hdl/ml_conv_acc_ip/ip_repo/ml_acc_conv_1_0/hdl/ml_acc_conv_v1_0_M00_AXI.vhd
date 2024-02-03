@@ -674,7 +674,6 @@ begin
 	        axi_rready <= '0';
           M00o_READ_RESULT <= (others => '0');
           s_M00o_READ_RESULT_COUNTER <= x"0000";
-          -- reads_done <= '0';
 
 	      -- accept/acknowledge rdata/rresp with axi_rready by the master
 	      -- when M_AXI_RVALID is asserted by slave
