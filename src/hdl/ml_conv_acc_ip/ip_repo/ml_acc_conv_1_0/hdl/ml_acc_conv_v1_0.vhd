@@ -373,7 +373,7 @@ architecture arch_imp of ml_acc_conv_v1_0 is
     signal s_S00i_WRITE_DATA	    : std_logic_vector(31 downto 0);
     signal s_S00o_WRITE_DONE        : std_logic;
     
-	-- Below are signals for the PAUSE_STATE
+	-- Below are signals for the PRE_LOAD_IACT
 	constant AMOUNT_CYCLE_PAUSE		: integer := 10;
 	signal PAUSE_CYCLE_COUNTER		: integer := 0;
 	
@@ -383,7 +383,6 @@ architecture arch_imp of ml_acc_conv_v1_0 is
     constant NUMBER_READ            : integer := NUMBER_OF_IACT / NUMBER_READ_EACH_TIME;
     -- constant NUMBER_READ            : integer := 18;
     signal iact_read_index          : integer := 0;     -- This is like the "i" in a for (i = 0 upto NUMBER_OF_IACT)
-
     
     signal s_i_M00_read_result_counter : std_logic_vector(15 downto 0)  := x"0000"; -- "i" means internal within this component
     signal s_read_started           : std_logic := '0';
@@ -404,12 +403,12 @@ architecture arch_imp of ml_acc_conv_v1_0 is
     type STATE_TYPE is (IDLE,
                         LOADING_WEIGHTS,
                         READY_TO_COPY_WEIGHTS,
-						PAUSE_STATE,
+						PRE_LOAD_IACT,
                         LOADING_IACT,
                         PARTIAL_IACT_READ,
                         READY_TO_COPY_PARTIAL_IACT,
                         READY_TO_COPY_IACT,
-                        MAC,	-- M for Multiply
+                        MAC_OP,	-- M for Multiply
                         PREPARE_OUTPUT);
     signal state : STATE_TYPE := IDLE;
 	
@@ -720,27 +719,18 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                     -- Reset weights_fifo write pointer
                     weights_write_ptr <= 0;
                     -- Set next state
-                    state	<= LOADING_IACT;    -- Go to next state
-                    -- state	<= PAUSE_STATE;    -- Go to next state
+                    -- state	<= LOADING_IACT;    -- Go to next state
+                    state	<= PRE_LOAD_IACT;    -- Go to next state
                 -- End of READY_TO_COPY_WEIGHTS case
 
-                when PAUSE_STATE => -- I though this can fix the M00's reads done staying high issue but I guess not
-                    if (PAUSE_CYCLE_COUNTER < AMOUNT_CYCLE_PAUSE) then
-                        PAUSE_CYCLE_COUNTER <= PAUSE_CYCLE_COUNTER + 1;
-                        state <= PAUSE_STATE;
-                    else
-                        state <= LOADING_IACT;
-                    end if;
-                -- End of PAUSE_STATE case
-
-                when LOADING_IACT =>
-                    -- Idea: We burst read 18 times, each time reading
-                    --       200 iact values and storing them into a 3600
-                    --       element VHDL array. This will allow MAC state
-                    --       to process the elements like a c for loop.
-                    -- This state will serve as the "main function", ie
-                    -- it will control the loading of data by controlling 
-                    -- the state of the conv unit. ...
+                when PRE_LOAD_IACT => -- I though this can fix the M00's reads done staying high issue but I guess not
+                    -- NOP for 10 cycles
+                    -- if (PAUSE_CYCLE_COUNTER < AMOUNT_CYCLE_PAUSE) then
+                    --     PAUSE_CYCLE_COUNTER <= PAUSE_CYCLE_COUNTER + 1;
+                    --     state <= PRE_LOAD_IACT;
+                    -- else
+                    --     state <= LOADING_IACT;
+                    -- end if;
 
                     -- Reset flags with M00
                     s_M00i_READ_START	<= '0';
@@ -753,6 +743,28 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
 
                     -- Initialize states
                     iact_read_index     <= 0;
+
+                    state	<= LOADING_IACT;
+                    
+                -- End of PRE_LOAD_IACT case
+
+                when LOADING_IACT =>
+                    -- Idea: We burst read 18 times, each time reading
+                    --       200 iact values and storing them into a 3600
+                    --       element VHDL array. This will allow MAC_OP state
+                    --       to process the elements like a c for loop.
+                    -- This state will serve as the "main function", ie
+                    -- it will control the loading of data by controlling 
+                    -- the state of the conv unit. ...
+
+                    -- Reset flags with M00 (Probably redundant coming from PRE_LOAD_IACT)
+                    s_M00i_READ_START	<= '0';
+                    s_M00i_READ_ADDR    <= s_ZEROs;
+                    s_M00i_WRITE_START	<= '0';
+                    s_M00i_WRITE_ADDR	<= s_ZEROs;
+                    s_M00i_WRITE_DATA	<= s_ZEROs;
+                    s_M00_INIT_AXI_TXN	<= '0';
+                    s_read_started		<= '0';
 
                     -- Start iact reading
                     state	<= PARTIAL_IACT_READ;
@@ -768,7 +780,7 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                         s_M00_INIT_AXI_TXN  <= '1';
                         s_M00i_READ_START   <= '1';
                         s_M00i_WRITE_START  <= '0';
-                        s_M00i_READ_ADDR    <= s_INACT_BRAM_BASE_ADDR;
+                        s_M00i_READ_ADDR    <= std_logic_vector(unsigned(s_INACT_BRAM_BASE_ADDR) + to_unsigned(iact_read_index, s_INACT_BRAM_BASE_ADDR'length));
                         s_M00i_READ_LEN     <= std_logic_vector(to_unsigned(NUMBER_READ_EACH_TIME, s_M00i_READ_LEN'length));
                         s_i_M00_read_result_counter <= (others => '0');
                         -- Required signals to start read transaction end
@@ -818,15 +830,30 @@ ml_acc_conv_v1_0_S_AXI_INTR_inst : ml_acc_conv_v1_0_S_AXI_INTR
                 -- End of PARTIAL_IACT_READ case
                 
                 when READY_TO_COPY_PARTIAL_IACT =>
+                    for i in iact_read_index to (NUMBER_READ_EACH_TIME - 1) loop
+                        inputs_arr(i) <= iact_fifo(i);
+                    end loop;
+                
+                    -- Reset iact_fifo write pointer
+                    iact_write_ptr <= 0;
+                    
+                    iact_read_index <= iact_read_index + 200; -- Increment counter
 
+                    -- Set next state
+                    if (iact_read_index < NUMBER_OF_IACT) then
+                        state	<= LOADING_IACT;    -- Go to next state
+                    else
+                        -- We are done coping 3600 iacts
+                        state   <= MAC_OP;
+                    end if;
                 -- End of READY_TO_COPY_PARTIAL_IACT case
                 
-                when MAC =>
+                when MAC_OP =>
                     for i in 0 to (NUMBER_OF_MACS2 - 1) loop
                         final_sum	<= std_logic_vector(unsigned(final_sum) + unsigned(parsum_arr(i)));
                     end loop;
                     state           <= PREPARE_OUTPUT;
-                -- End of MAC case
+                -- End of MAC_OP case
 
                 when PREPARE_OUTPUT =>
                     -- The "WB" stage, job is to prepare the output
